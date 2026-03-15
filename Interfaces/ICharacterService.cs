@@ -1,9 +1,8 @@
 ﻿using c__repository_2026.c__service_2026.Dto;
-using c__repository_2026.c__service_2026.Interfaces;
+using Service.DTOs;
 using System.Collections.Generic;
 
-namespace c__repository_2026.c__service_2026.Dto
-
+namespace Service.Interfaces
 {
     public interface ICharacterService : IService<CharacterDto>
     {
