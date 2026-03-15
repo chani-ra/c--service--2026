@@ -1,9 +1,10 @@
 ﻿using c__repository_2026.c__service_2026.Dto;
+using c__repository_2026.c__service_2026.Interfaces;
 using System.Collections.Generic;
 
 namespace Service.Interfaces
 {
-    internal interface IDetectionService : IService<DetectedCharacterDto>
+    public interface IDetectedService : IService<DetectedCharacterDto>
     {
         List<DetectedCharacterDto> GetByImage(int imageId);
         List<DetectedCharacterDto> GetByCharacter(int characterId);

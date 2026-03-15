@@ -1,9 +1,10 @@
 ﻿using c__repository_2026.c__service_2026.Dto;
+using c__repository_2026.c__service_2026.Interfaces;
 using System.Collections.Generic;
 
 namespace Service.Interfaces
 {
-    internal interface IImageService : IService<ImageDto>
+    public interface IImageService : IService<GalleryDto>
     {
         List<ImageDto> GetByGallery(int galleryId);
         List<ImageDto> GetByUser(int userId);

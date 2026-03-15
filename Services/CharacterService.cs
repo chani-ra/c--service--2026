@@ -134,10 +134,5 @@ namespace c__repository_2026.c__service_2026.Dto
                 TotalDetections = detections.Count
             };
         }
-
-        public void UpdateItem(int id, CharacterDto item)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

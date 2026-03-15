@@ -1,5 +1,5 @@
-﻿using .Dto;
-using Service.Interfaces;   
+﻿using c__repository_2026.c__service_2026.Dto;
+using c__repository_2026.c__service_2026.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
