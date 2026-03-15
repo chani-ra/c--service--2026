@@ -1,11 +1,11 @@
-﻿using Service.DTOs;
-using Service.Interfaces;
+﻿using .Dto;
+using Service.Interfaces;   
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using static System.Net.Mime.MediaTypeNames;
 
-namespace Service.Implementations
+namespace c__repository_2026.c__service_2026.Dto
 {
     public class GalleryService : IGalleryService
     {
@@ -26,24 +26,24 @@ namespace Service.Implementations
             _detectionRepository = detectionRepository;
         }
 
-        public List<GalleryDTO> GetAll()
+        public List<GalleryDto> GetAll()
         {
             var galleries = _galleryRepository.GetAll();
             return galleries.Select(MapToDTO).ToList();
         }
 
-        public GalleryDTO Get(int id)
+        public GalleryDto Get(int id)
         {
             var gallery = _galleryRepository.Get(id);
             return gallery == null ? null : MapToDTO(gallery);
         }
 
-        public GalleryDTO AddItem(GalleryDTO item)
+        public GalleryDto AddItem(GalleryDto item)
         {
             if (string.IsNullOrWhiteSpace(item.Name))
                 throw new ArgumentException("שם הגלריה חובה");
 
-            var gallery = new Gallery
+            var gallery = new GalleryDto
             {
                 Name = item.Name,
                 Description = item.Description,
@@ -56,7 +56,7 @@ namespace Service.Implementations
             return MapToDTO(result);
         }
 
-        public void UpdateItem(int id, GalleryDTO item)
+        public void UpdateItem(int id, GalleryDto item)
         {
             if (string.IsNullOrWhiteSpace(item.Name))
                 throw new ArgumentException("שם הגלריה חובה");
@@ -81,19 +81,19 @@ namespace Service.Implementations
             _galleryRepository.DeleteItem(id);
         }
 
-        public List<GalleryDTO> GetByUser(int userId)
+        public List<GalleryDto> GetByUser(int userId)
         {
             var galleries = _galleryRepository.GetGalleriesByUserId(userId);
             return galleries.Select(MapToDTO).ToList();
         }
 
-        public List<GalleryDTO> GetByCharacter(int characterId)
+        public List<GalleryDto> GetByCharacter(int characterId)
         {
             var galleries = _galleryRepository.GetGalleriesByCharacterId(characterId);
             return galleries.Select(MapToDTO).ToList();
         }
 
-        public GalleryDTO GetWithImages(int galleryId)
+        public GalleryDto GetWithImages(int galleryId)
         {
             var gallery = _galleryRepository.Get(galleryId);
             return gallery == null ? null : MapToDTO(gallery);
@@ -129,12 +129,12 @@ namespace Service.Implementations
             };
         }
 
-        private GalleryDTO MapToDTO(Gallery gallery)
+        private GalleryDto MapToDTO(GalleryDto gallery)
         {
             var images = _imageRepository.GetImagesByGalleryId(gallery.Id);
             var character = _characterRepository.Get(gallery.CharacterId);
 
-            return new GalleryDTO
+            return new GalleryDto
             {
                 Id = gallery.Id,
                 Name = gallery.Name,
@@ -148,11 +148,11 @@ namespace Service.Implementations
             };
         }
 
-        private ImageDTO MapImageToDTO(Image image)
+        private ImageDto MapImageToDTO(ImageDto image)
         {
             var detections = _detectionRepository.GetDetectionsByImageId(image.Id);
 
-            return new ImageDTO
+            return new ImageDto
             {
                 Id = image.Id,
                 Url = image.Url,
@@ -165,11 +165,11 @@ namespace Service.Implementations
             };
         }
 
-        private DetectionDTO MapDetectionToDTO(DetectedCharacter detection)
+        private DetectedCharacterDto MapDetectionToDTO(DetectedCharacterDto detection)
         {
             var character = _characterRepository.Get(detection.CharacterId);
 
-            return new DetectionDTO
+            return new DetectedCharacterDto
             {
                 Id = detection.Id,
                 ImageId = detection.ImageId,

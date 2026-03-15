@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace c__repository_2026.c__service_2026.Dto
 {
-    public class DetectedCharacterDTO
+    public class DetectedCharacterDto
     {
         public int Id { get; set; }
         public int ImageId { get; set; }
