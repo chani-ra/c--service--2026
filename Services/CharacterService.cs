@@ -1,10 +1,10 @@
-﻿using Service.DTOs;
+﻿using c__repository_2026.Dto;
 using Service.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Service.Implementations
+namespace c__repository_2026.c__service_2026.Dto
 {
     public class CharacterService : ICharacterService
     {
@@ -17,19 +17,19 @@ namespace Service.Implementations
             _detectionRepository = detectionRepository;
         }
 
-        public List<CharacterDTO> GetAll()
+        public List<CharacterDto> GetAll()
         {
             var characters = _characterRepository.GetAll();
             return characters.Select(MapToDTO).ToList();
         }
 
-        public CharacterDTO Get(int id)
+        public CharacterDto Get(int id)
         {
             var character = _characterRepository.Get(id);
             return character == null ? null : MapToDTO(character);
         }
 
-        public CharacterDTO AddItem(CharacterDTO item)
+        public CharacterDto AddItem(CharacterDto item)
         {
             if (string.IsNullOrWhiteSpace(item.CharacterName))
                 throw new ArgumentException("שם הדמות חובה");
@@ -46,7 +46,7 @@ namespace Service.Implementations
             return MapToDTO(result);
         }
 
-        public void UpdateItem(int id, CharacterDTO item)
+        public void UpdateItem(int id, CharacterD item)
         {
             if (string.IsNullOrWhiteSpace(item.CharacterName))
                 throw new ArgumentException("שם הדמות חובה");
@@ -71,16 +71,16 @@ namespace Service.Implementations
             _characterRepository.DeleteItem(id);
         }
 
-        public List<CharacterDTO> SearchByName(string name)
+        public List<CharacterDto> SearchByName(string name)
         {
             if (string.IsNullOrWhiteSpace(name))
-                return new List<CharacterDTO>();
+                return new List<CharacterDto>();
 
             var characters = _characterRepository.SearchByName(name);
             return characters.Select(MapToDTO).ToList();
         }
 
-        public List<CharacterDTO> GetTopDetected(int topCount)
+        public List<CharacterDto> GetTopDetected(int topCount)
         {
             var detections = _detectionRepository.GetAll();
             var topCharacterIds = detections
@@ -90,7 +90,7 @@ namespace Service.Implementations
                 .Select(g => g.Key)
                 .ToList();
 
-            var characters = new List<CharacterDTO>();
+            var characters = new List<CharacterDto>();
             foreach (var characterId in topCharacterIds)
             {
                 var character = _characterRepository.Get(characterId);
@@ -120,11 +120,11 @@ namespace Service.Implementations
             };
         }
 
-        private CharacterDTO MapToDTO(Character character)
+        private CharacterDto MapToDTO(CharacterDto character)
         {
             var detections = _detectionRepository.GetDetectionsByCharacterId(character.Id);
 
-            return new CharacterDTO
+            return new CharacterDto
             {
                 Id = character.Id,
                 CharacterName = character.CharacterName,
