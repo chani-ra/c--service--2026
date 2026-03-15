@@ -2,7 +2,7 @@
 using Service.DTOs;
 using System.Collections.Generic;
 
-namespace Service.Interfaces
+namespace c__repository_2026.Interfaces
 {
     internal interface ICharacterService : IService<CharacterDto>
     {
