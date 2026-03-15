@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace c__repository_2026.c__service_2026.Dto
 {
-    using System;
-    using System.Collections.Generic;
+   
 
   
         public class GalleryDto

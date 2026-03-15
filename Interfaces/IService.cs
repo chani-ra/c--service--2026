@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 using System;
 using System.Collections.Generic;
 
-namespace Service.Interfaces
+namespace c__repository_2026.c__service_2026.Interfaces
 {
-    internal interface IService<T>
+    public interface IService<T>
     {
         List<T> GetAll();
         T Get(int id);

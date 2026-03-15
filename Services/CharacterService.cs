@@ -1,5 +1,5 @@
-﻿using c__repository_2026.Dto;
-using Service.Interfaces;
+﻿using c__repository_2026.c__service_2026.Dto;
+using c__repository_2026.c__service_2026.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,7 +34,7 @@ namespace c__repository_2026.c__service_2026.Dto
             if (string.IsNullOrWhiteSpace(item.CharacterName))
                 throw new ArgumentException("שם הדמות חובה");
 
-            var character = new Character
+            var character = new CharacterDto
             {
                 CharacterName = item.CharacterName,
                 Description = item.Description,
@@ -46,7 +46,7 @@ namespace c__repository_2026.c__service_2026.Dto
             return MapToDTO(result);
         }
 
-        public void UpdateItem(int id, CharacterD item)
+        public void UpdateItem(int id, CharacterDto item)
         {
             if (string.IsNullOrWhiteSpace(item.CharacterName))
                 throw new ArgumentException("שם הדמות חובה");
@@ -133,6 +133,11 @@ namespace c__repository_2026.c__service_2026.Dto
                 CreatedDate = character.CreatedDate,
                 TotalDetections = detections.Count
             };
+        }
+
+        public void UpdateItem(int id, CharacterDto item)
+        {
+            throw new NotImplementedException();
         }
     }
 }

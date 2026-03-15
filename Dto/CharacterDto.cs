@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace c__repository_2026.c__service_2026.Dto
 {
-    internal class CharacterDto
+    public class CharacterDto
     {
         public int Id { get; set; }
         public string CharacterName { get; set; }
@@ -14,6 +14,7 @@ namespace c__repository_2026.c__service_2026.Dto
 
         public int TotalDetections { get; set; }
         public DateTime CreatedDate { get; set; }
+        public object ProfileImageUrl { get; internal set; }
     }
 
 }
