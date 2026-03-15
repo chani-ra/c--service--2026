@@ -4,14 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FaceRecognition.Service.Interfaces
+using System;
+using System.Collections.Generic;
+
+namespace Service.Interfaces
 {
-    public interface IService<T>
+    internal interface IService<T>
     {
-        Task<List<T>> GetAll();
-        Task<T> Get(int id);
-        Task<T> AddItem(T item);
-        Task<bool> UpdateItem(int id, T item);
-        Task<bool> DeleteItem(int id);
+        List<T> GetAll();
+        T Get(int id);
+        T AddItem(T item);
+        void UpdateItem(int id, T item);
+        void DeleteItem(int id);
     }
 }
