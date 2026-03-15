@@ -1,5 +1,6 @@
 ﻿using c__repository_2026.c__service_2026.Dto;
 using c__repository_2026.c__service_2026.Interfaces;
+using Service.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,10 +9,10 @@ namespace c__repository_2026.c__service_2026.Dto
 {
     public class CharacterService : ICharacterService
     {
-        private readonly ICharacterRepository _characterRepository;
-        private readonly IDetectedCharacterRepository _detectionRepository;
+        private readonly ICharacterService _characterRepository;
+        private readonly IDetectedService _detectionRepository;
 
-        public CharacterService(ICharacterRepository characterRepository, IDetectedCharacterRepository detectionRepository)
+        public CharacterService(ICharacterService characterRepository, IDetectedService detectionRepository)
         {
             _characterRepository = characterRepository;
             _detectionRepository = detectionRepository;

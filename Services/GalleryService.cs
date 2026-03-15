@@ -1,5 +1,6 @@
 ﻿using c__repository_2026.c__service_2026.Dto;
 using c__repository_2026.c__service_2026.Interfaces;
+using Service.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,16 +10,16 @@ namespace c__repository_2026.c__service_2026.Dto
 {
     public class GalleryService : IGalleryService
     {
-        private readonly IGalleryRepository _galleryRepository;
-        private readonly IImageRepository _imageRepository;
-        private readonly ICharacterRepository _characterRepository;
-        private readonly IDetectedCharacterRepository _detectionRepository;
+        private readonly IGalleryService _galleryRepository;
+        private readonly IImageService _imageRepository;
+        private readonly ICharacterService _characterRepository;
+        private readonly IDetectedService _detectionRepository;
 
         public GalleryService(
-            IGalleryRepository galleryRepository,
-            IImageRepository imageRepository,
-            ICharacterRepository characterRepository,
-            IDetectedCharacterRepository detectionRepository)
+            IGalleryService galleryRepository,
+            IImageService imageRepository,
+            ICharacterService characterRepository,
+            IDetectedService detectionRepository)
         {
             _galleryRepository = galleryRepository;
             _imageRepository = imageRepository;
