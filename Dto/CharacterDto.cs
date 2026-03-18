@@ -1,5 +1,4 @@
-﻿//c#-service-2026/Dto/CharacterDto.cs
-using System;
+﻿using System;
 
 namespace c__service_2026.Dto
 {
@@ -8,18 +7,23 @@ namespace c__service_2026.Dto
         public int Id { get; set; }
         public string CharacterName { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
-        public int TotalDetections { get; set; }
         public DateTime CreatedDate { get; set; }
 
-        // שיניתי מ-object ל-string, כי URL של תמונה הוא טקסט
+        // שדות מחושבים (לא קיימים ישירות בטבלה ב-DB)
+        public int TotalDetections { get; set; }
         public string ProfileImageUrl { get; set; } = string.Empty;
     }
 }
 /*
- * מטרת הקובץ (CharacterDto):
- * DTO (Data Transfer Object) מייצג את המידע שאנחנו שולחים ללקוח (Client) או מקבלים ממנו.
- * בשונה ממחלקת ה-Character הרגילה (שמייצגת טבלה במסד הנתונים), כאן אנחנו יכולים להוסיף 
- * שדות מחושבים כמו 'TotalDetections' (סך כל הזיהויים) שלא נשמרים ישירות ב-DB אלא מחושבים בשכבת הלוגיקה (Service),
- * וכן אנחנו מסתירים מידע רגיש מה-DB במידה ויש. 
- * המורה דרשה (סעיף 16) להשתמש ב-AutoMapper ע"מ להמיר אובייקטים אלו.
+ * -------------------------------------------------------------------------
+ * הסבר מפורט למבחן (למה אנחנו צריכים את Dto / CharacterDto?):
+ * -------------------------------------------------------------------------
+ * אובייקט DTO (Data Transfer Object) נועד להעברת נתונים בין השרת (API) ללקוח (Client).
+ * הסיבה שיצרנו אותו היא כדי להפריד בין איך שהנתונים נשמרים במסד הנתונים (Entities) 
+ * לבין מה שאנחנו בוחרים להציג למשתמש. 
+ * למשל, כאן הוספנו את השדה 'TotalDetections' (סך הכל זיהויים). זהו שדה "מחושב" - 
+ * הוא לא נשמר בעמודה בטבלה, אלא שכבת ה-Service תחשב אותו בזמן אמת ותמלא אותו פה, 
+ * כדי שלצד-לקוח (Client Side) יהיה קל להציג את הנתון בלי לעשות חישובים מסובכים בעצמו.
+ * בהמשך נשתמש בספריית AutoMapper (לפי דרישת הפרויקט) כדי להמיר אוטומטית בין 
+ * הישות המקורית (Character) לבין ה-DTO הזה.
  */
