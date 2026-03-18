@@ -1,4 +1,5 @@
-﻿using System;
+﻿//c#-service-2026/Dto/GalleryDto.cs
+using System;
 using System.Collections.Generic;
 
 namespace c__service_2026.Dto

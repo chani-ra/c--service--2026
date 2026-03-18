@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿//c#-service-2026/Interfaces/IService.cs
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace c__service_2026.Interfaces

@@ -1,4 +1,5 @@
-﻿using c__service_2026.Dto;
+﻿//c#-service-2026/Services/GalleryService.cs
+using c__service_2026.Dto;
 using c__service_2026.Interfaces;
 
 using System;

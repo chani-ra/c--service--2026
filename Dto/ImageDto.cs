@@ -1,4 +1,5 @@
-﻿using System;
+﻿//c#-service-2026/Dto/ImageDto.cs
+using System;
 
 namespace c__service_2026.Dto
 {

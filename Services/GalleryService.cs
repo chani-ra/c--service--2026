@@ -1,4 +1,5 @@
-﻿         // ה-Entities מה-DB
+﻿//c#-service-2026/Services/GalleryService.cs 
+// ה-Entities מה-DB
 using c__service_2026.Interfaces;         // ה-Repositories שלך
 using c__service_2026.Dto;
 
