@@ -1,12 +1,8 @@
-﻿using c__repository_2026.c__service_2026.Dto;
-using c__repository_2026.c__service_2026.Interfaces;
-using Service.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using static System.Net.Mime.MediaTypeNames;
+﻿using c__nRepository_2026.Entities;           // ה-Entities מה-DB
+using c__nRepository_2026.Interfaces;         // ה-Repositories שלך
+using c__repository_2026.c__service_2026.Dto; // ה-DTOs שלך
 
-namespace c__repository_2026.c__service_2026.Dto
+namespace c__repository_2026.c__service_2026.Services
 {
     public class GalleryService : IGalleryService
     {

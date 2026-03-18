@@ -1,14 +1,20 @@
-﻿using c__repository_2026.c__service_2026.Dto;
-using c__repository_2026.c__service_2026.Interfaces;
+﻿using c__service_2026.Dto;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
-namespace Service.Interfaces
+namespace c__service_2026.Interfaces
 {
     public interface IGalleryService : IService<GalleryDto>
     {
-        List<GalleryDto> GetByUser(int userId);
-        List<GalleryDto> GetByCharacter(int characterId);
-        GalleryDto GetWithImages(int galleryId);
-        Dictionary<string, object> GetGalleryStatistics(int galleryId);
+        Task<List<GalleryDto>> GetByUserAsync(int userId);
+        Task<List<GalleryDto>> GetByCharacterAsync(int characterId);
+        Task<GalleryDto> GetWithImagesAsync(int galleryId);
+        Task<Dictionary<string, object>> GetGalleryStatisticsAsync(int galleryId);
     }
 }
+/*
+ * מטרת הקובץ (IGalleryService):
+ * ממשק לניהול גלריות תמונות.
+ * מאפשר שליפת גלריות לפי משתמש (דרישה מס' 21 - אבטחה והרשאות) וכן שליפה מלאה 
+ * הכוללת את כל אובייקטי התמונות שבתוך הגלריה (Eager Loading בתוך ה-DTO).
+ */

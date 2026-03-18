@@ -1,13 +1,19 @@
-﻿using c__repository_2026.c__service_2026.Dto;
-using c__repository_2026.c__service_2026.Interfaces;
+﻿using c__service_2026.Dto;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
-namespace c__repository_2026.c__service_2026.Interfaces
+namespace c__service_2026.Interfaces
 {
     public interface ICharacterService : IService<CharacterDto>
     {
-        List<CharacterDto> SearchByName(string name);
-        List<CharacterDto> GetTopDetected(int topCount);
-        Dictionary<string, object> GetCharacterStatistics(int characterId);
+        Task<List<CharacterDto>> SearchByNameAsync(string name);
+        Task<List<CharacterDto>> GetTopDetectedAsync(int topCount);
+        Task<Dictionary<string, object>> GetCharacterStatisticsAsync(int characterId);
     }
 }
+/*
+ * מטרת הקובץ (ICharacterService):
+ * ממשק ייעודי ללוגיקה של ניהול דמויות.
+ * בנוסף לפעולות הרגילות, הוא מגדיר מתודות לחיפוש דמות לפי שם, שליפת הדמויות הכי מזוהות 
+ * והפקת סטטיסטיקה על דמות ספציפית (למשל: כמה פעמים הופיעה ובאיזה תאריכים).
+ */

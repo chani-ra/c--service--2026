@@ -1,14 +1,20 @@
-﻿using c__repository_2026.c__service_2026.Dto;
-using c__repository_2026.c__service_2026.Interfaces;
+﻿using c__service_2026.Dto;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
-namespace Service.Interfaces
+namespace c__service_2026.Interfaces
 {
     public interface IDetectedService : IService<DetectedCharacterDto>
     {
-        List<DetectedCharacterDto> GetByImage(int imageId);
-        List<DetectedCharacterDto> GetByCharacter(int characterId);
-        List<DetectedCharacterDto> GetHighConfidence(double minConfidence);
-        Dictionary<string, object> GetDetectionStatistics();
+        Task<List<DetectedCharacterDto>> GetByImageAsync(int imageId);
+        Task<List<DetectedCharacterDto>> GetByCharacterAsync(int characterId);
+        Task<List<DetectedCharacterDto>> GetHighConfidenceAsync(double minConfidence);
+        Task<Dictionary<string, object>> GetDetectionStatisticsAsync();
     }
 }
+/*
+ * מטרת הקובץ (IDetectedService):
+ * ממשק זה מגדיר את הפעולות עבור תוצאות הזיהוי של האלגוריתם.
+ * הוא מאפשר לשלוף את כל הזיהויים ששייכים לתמונה מסוימת או לדמות מסוימת, 
+ * וכן לסנן זיהויים לפי "רמת ביטחון" (Confidence) - דרישה נפוצה במערכות זיהוי פנים.
+ */
