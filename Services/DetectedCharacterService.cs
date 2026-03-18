@@ -1,124 +1,97 @@
 ﻿//c#-service-2026/Services/DetectedCharacterService.cs
-using.c__service_2026.Dto;
-using c__service_2026.Dto;
-using c__service_2026.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using AutoMapper;
+using c__nRepository_2026.Entities;
+using c__nRepository_2026.Interfaces;
+using c__service_2026.Dto;
+using c__service_2026.Interfaces;
 
 namespace c__service_2026.Services
 {
-    public class DetectedCharacterService : IDetectedService
+    public class DetectedCharacterService : IDetectionService
     {
-        private readonly IDetectedService _detectionRepository;
-        private readonly ICharacterService _characterRepository;
+        private readonly IRepository<DetectedCharacter> _detectionRepo;
+        private readonly IMapper _mapper;
 
-        public DetectedCharacterService(IDetectedService detectionRepository, ICharacterRepository characterRepository)
+        public DetectedCharacterService(IRepository<DetectedCharacter> detectionRepo, IMapper mapper)
         {
-            _detectionRepository = detectionRepository;
-            _characterRepository = characterRepository;
+            _detectionRepo = detectionRepo;
+            _mapper = mapper;
         }
 
-        public List<DetectedCharacterDto> GetAll()
+        public async Task<List<DetectedCharacterDto>> GetAllAsync()
         {
-            return _detectionRepository.GetAll().Select(MapToDTO).ToList();
+            var entities = await _detectionRepo.GetAllAsync();
+            return _mapper.Map<List<DetectedCharacterDto>>(entities);
         }
 
-        public DetectedCharacterDto Get(int id)
+        public async Task<DetectedCharacterDto> GetByIdAsync(int id)
         {
-            var detection = _detectionRepository.Get(id);
-            return detection == null ? null : MapToDTO(detection);
+            var entity = await _detectionRepo.GetByIdAsync(id);
+            return _mapper.Map<DetectedCharacterDto>(entity);
         }
 
-        public DetectedCharacterDto AddItem(DetectedCharacterDto item)
+        public async Task<DetectedCharacterDto> AddItemAsync(DetectedCharacterDto item)
         {
-            item.DetectionDate = DateTime.Now;
-            var result = _detectionRepository.AddItem(item);
-            return MapToDTO(result);
+            var entity = _mapper.Map<DetectedCharacter>(item);
+            entity.DetectionDate = DateTime.Now;
+            var added = await _detectionRepo.AddItemAsync(entity);
+            return _mapper.Map<DetectedCharacterDto>(added);
         }
 
-        public List<DetectedCharacterDto> GetHighConfidence(double minConfidence)
+        public async Task UpdateItemAsync(int id, DetectedCharacterDto item)
         {
-            return _detectionRepository.GetAll()
-                .Where(d => d.Confidence >= minConfidence)
-                .Select(MapToDTO).ToList();
+            var entity = _mapper.Map<DetectedCharacter>(item);
+            await _detectionRepo.UpdateItemAsync(id, entity);
         }
 
-        public Dictionary<string, object> GetDetectionStatistics()
+        public async Task DeleteItemAsync(int id)
         {
-            var all = _detectionRepository.GetAll();
+            await _detectionRepo.DeleteItemAsync(id);
+        }
+
+        public async Task<List<DetectedCharacterDto>> GetByImageIdAsync(int imageId)
+        {
+            var all = await _detectionRepo.GetAllAsync();
+            var filtered = all.Where(d => d.ImageId == imageId).ToList();
+            return _mapper.Map<List<DetectedCharacterDto>>(filtered);
+        }
+
+        public async Task<List<DetectedCharacterDto>> GetByCharacterIdAsync(int characterId)
+        {
+            var all = await _detectionRepo.GetAllAsync();
+            var filtered = all.Where(d => d.CharacterId == characterId).ToList();
+            return _mapper.Map<List<DetectedCharacterDto>>(filtered);
+        }
+
+        public async Task<List<DetectedCharacterDto>> GetHighConfidenceAsync(double minConfidence)
+        {
+            var all = await _detectionRepo.GetAllAsync();
+            var filtered = all.Where(d => d.Confidence >= minConfidence).ToList();
+            return _mapper.Map<List<DetectedCharacterDto>>(filtered);
+        }
+
+        public async Task<Dictionary<string, object>> GetDetectionStatisticsAsync()
+        {
+            var all = await _detectionRepo.GetAllAsync();
             return new Dictionary<string, object>
             {
                 { "TotalDetections", all.Count },
-                { "AverageConfidence", all.Any() ? all.Average(d => d.Confidence) : 0 },
-                { "SuccessRate", all.Count(d => d.Confidence > 70) }
+                { "AverageConfidence", all.Any() ? Math.Round(all.Average(d => d.Confidence), 2) : 0 },
+                { "SuccessRateCount", all.Count(d => d.Confidence > 0.8) } // מניחים שמעל 0.8 זה זיהוי מוצלח
             };
-        }
-
-        public void UpdateItem(int id, DetectedCharacterDto item) => _detectionRepository.UpdateItem(id, item);
-        public void DeleteItem(int id) => _detectionRepository.DeleteItem(id);
-        public List<DetectedCharacterDto> GetByImage(int imageId) => _detectionRepository.GetDetectionsByImageId(imageId).Select(MapToDTO).ToList();
-        public List<DetectedCharacterDto> GetByCharacter(int characterId) => _detectionRepository.GetDetectionsByCharacterId(characterId).Select(MapToDTO).ToList();
-
-        private DetectedCharacterDto MapToDTO(DetectedCharacterDto d)
-        {
-            var charName = _characterRepository.Get(d.CharacterId)?.CharacterName ?? "Unknown";
-            return new DetectedCharacterDto
-            {
-                Id = d.Id,
-                CharacterId = d.CharacterId,
-                CharacterName = charName,
-                Confidence = d.Confidence,
-                DetectionDate = d.DetectionDate,
-                ImageId = d.ImageId,
-                FaceCoordinates = d.FaceCoordinates,
-                ModelUsed = d.ModelUsed
-            };
-        }
-
-        public Task<List<DetectedCharacterDto>> GetByImageAsync(int imageId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<List<DetectedCharacterDto>> GetByCharacterAsync(int characterId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<List<DetectedCharacterDto>> GetHighConfidenceAsync(double minConfidence)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<Dictionary<string, object>> GetDetectionStatisticsAsync()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<List<DetectedCharacterDto>> GetAllAsync()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<DetectedCharacterDto> GetByIdAsync(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<DetectedCharacterDto> AddItemAsync(DetectedCharacterDto item)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task UpdateItemAsync(int id, DetectedCharacterDto item)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task DeleteItemAsync(int id)
-        {
-            throw new NotImplementedException();
         }
     }
 }
+/*
+ * -------------------------------------------------------------------------
+ * הסבר מפורט למבחן:
+ * -------------------------------------------------------------------------
+ * שירות זה אחראי על טבלת הזיהויים המחברת בין התמונה לדמות.
+ * גם כאן הכל א-סינכרוני. שימי לב לפונקציה GetHighConfidenceAsync - היא מדגימה 
+ * שימוש בלוגיקה (LINQ - Where) כדי לסנן נתונים לפני המרתם ל-DTO והחזרתם ללקוח. 
+ * המטרה היא להוריד עומס מעיבוד הנתונים בדפדפן, ולבצע את הסינון הכבד בשרת.
+ */

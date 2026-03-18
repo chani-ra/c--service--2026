@@ -1,136 +1,100 @@
 ﻿//c#-service-2026/Services/GalleryService.cs
-using c__service_2026.Dto;
-using c__service_2026.Interfaces;
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using AutoMapper;
+using c__nRepository_2026.Entities;
+using c__nRepository_2026.Interfaces;
+using c__service_2026.Dto;
+using c__service_2026.Interfaces;
 
 namespace c__service_2026.Services
 {
     public class ImageService : IImageService
     {
-        private readonly IImageService _imageRepository;
-        private readonly IDetectedService _detectionRepository;
+        private readonly IRepository<Image> _imageRepo;
+        private readonly IMapper _mapper;
 
-        public ImageService(IImageService imageRepository, IDetectedService detectionRepository)
+        public ImageService(IRepository<Image> imageRepo, IMapper mapper)
         {
-            _imageRepository = imageRepository;
-            _detectionRepository = detectionRepository;
+            _imageRepo = imageRepo;
+            _mapper = mapper;
         }
 
-        public List<ImageDto> GetAll()
+        public async Task<List<ImageDto>> GetAllAsync()
         {
-            return _imageRepository.GetAll().Select(MapToDTO).ToList();
+            var entities = await _imageRepo.GetAllAsync();
+            return _mapper.Map<List<ImageDto>>(entities);
         }
 
-        public ImageDto Get(int id)
+        public async Task<ImageDto> GetByIdAsync(int id)
         {
-            var image = _imageRepository.Get(id);
-            return image == null ? null : MapToDTO(image);
+            var entity = await _imageRepo.GetByIdAsync(id);
+            return _mapper.Map<ImageDto>(entity);
         }
 
-        public ImageDto AddItem(ImageDto item)
+        public async Task<ImageDto> AddItemAsync(ImageDto item)
         {
-            if (string.IsNullOrEmpty(item.Url))
-                throw new ArgumentException("URL תמונה הוא שדה חובה");
-
-            item.UploadedDate = DateTime.Now;
-            var result = _imageRepository.AddItem(item);
-            return MapToDTO(result);
+            var entity = _mapper.Map<Image>(item);
+            var added = await _imageRepo.AddItemAsync(entity);
+            return _mapper.Map<ImageDto>(added);
         }
 
-        public void UpdateItem(int id, ImageDto item)
+        public async Task UpdateItemAsync(int id, ImageDto item)
         {
-            var existing = _imageRepository.Get(id);
-            if (existing == null) throw new Exception("תמונה לא נמצאה");
-
-            existing.Url = item.Url;
-            _imageRepository.UpdateItem(id, existing);
+            var entity = _mapper.Map<Image>(item);
+            await _imageRepo.UpdateItemAsync(id, entity);
         }
 
-        public void DeleteItem(int id)
+        public async Task DeleteItemAsync(int id)
         {
-            _imageRepository.DeleteItem(id);
+            await _imageRepo.DeleteItemAsync(id);
         }
 
-        public List<ImageDto> GetByGallery(int galleryId)
+        public async Task<List<ImageDto>> GetByGalleryIdAsync(int galleryId)
         {
-            return _imageRepository.GetImagesByGalleryId(galleryId).Select(MapToDTO).ToList();
+            var all = await _imageRepo.GetAllAsync();
+            var filtered = all.Where(i => i.GalleryId == galleryId).ToList();
+            return _mapper.Map<List<ImageDto>>(filtered);
         }
 
-        public ImageDto GetWithDetections(int imageId)
+        public async Task<List<ImageDto>> GetByUserIdAsync(int userId)
         {
-            var image = Get(imageId);
-            // כאן אפשר להוסיף לוגיקה שמצרפת את הזיהויים הספציפיים לתמונה
-            return image;
+            var all = await _imageRepo.GetAllAsync();
+            var filtered = all.Where(i => i.UserId == userId).ToList();
+            return _mapper.Map<List<ImageDto>>(filtered);
         }
 
-        private ImageDto MapToDTO(ImageDto image)
+        public async Task<List<ImageDto>> GetUnprocessedAsync()
         {
-            return new ImageDto
-            {
-                Id = image.Id,
-                Url = image.Url,
-                GalleryId = image.GalleryId,
-                UserId = image.UserId,
-                UploadedDate = image.UploadedDate
-            };
+            // לוגיקה שמחזירה תמונות שעדיין אין להן זיהויים כלל (לא עובדו)
+            var all = await _imageRepo.GetAllAsync();
+            var unprocessed = all.Where(i => i.DetectedCharacters == null || !i.DetectedCharacters.Any()).ToList();
+            return _mapper.Map<List<ImageDto>>(unprocessed);
         }
 
-        // מימושים נוספים מה-Interface
-        public List<ImageDto> GetByUser(int userId) => _imageRepository.GetByUserId(userId).Select(MapToDTO).ToList();
-        public List<ImageDto> GetUnprocessed() => _imageRepository.GetAll().Where(i => i.Id > 0).ToList(); // לוגיקה לדוגמה
-        public bool MarkAsProcessed(int imageId) => true;
-
-        public Task<List<ImageDto>> GetByGalleryAsync(int galleryId)
+        public async Task<bool> MarkAsProcessedAsync(int imageId)
         {
-            throw new NotImplementedException();
+            // פונקציית דמה - במערכת אמיתית פה היינו מעדכנים סטטוס עיבוד
+            return await Task.FromResult(true);
         }
 
-        public Task<List<ImageDto>> GetByUserAsync(int userId)
+        public async Task<ImageDto> GetWithDetectionsAsync(int imageId)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task<List<ImageDto>> GetUnprocessedAsync()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> MarkAsProcessedAsync(int imageId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<ImageDto> GetWithDetectionsAsync(int imageId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<List<ImageDto>> GetAllAsync()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<ImageDto> GetByIdAsync(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<ImageDto> AddItemAsync(ImageDto item)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task UpdateItemAsync(int id, ImageDto item)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task DeleteItemAsync(int id)
-        {
-            throw new NotImplementedException();
+            var entity = await _imageRepo.GetByIdAsync(imageId);
+            return _mapper.Map<ImageDto>(entity);
         }
     }
 }
+/*
+ * -------------------------------------------------------------------------
+ * הסבר מפורט למבחן:
+ * -------------------------------------------------------------------------
+ * שירות לתמונות שכולל לוגיקה מעניינת כמו 'GetUnprocessedAsync'. 
+ * פונקציה זו בודקת אילו תמונות הועלו ועדיין ה-Collection של ה-DetectedCharacters 
+ * שלהן ריק, כלומר מנוע הזיהוי עוד לא עבר עליהן. 
+ * שימי לב שוב לחסכון העצום בקוד: פונקציות העדכון וההוספה משתמשות בשורה אחת 
+ * של _mapper.Map כדי להמיר את הנתונים, מה שעושה את הקוד נקי מאוד וקריא 
+ * בדיוק כמו שפרויקט בשיטת השכבות (N-Tier Architecture) צריך להיות.
+ */
