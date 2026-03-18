@@ -1,18 +1,18 @@
-﻿using c__repository_2026.c__service_2026.Dto;
-using c__repository_2026.c__service_2026.Interfaces;
-using Service.Interfaces;
+﻿using c__service_2026.Dto;
+using c__service_2026.Interfaces;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace c__repository_2026.c__service_2026.Services
+namespace c__service_2026.Services
 {
     public class ImageService : IImageService
     {
-        private readonly IImageRepository _imageRepository;
-        private readonly IDetectedRepository _detectionRepository;
+        private readonly IImageService _imageRepository;
+        private readonly IDetectedService _detectionRepository;
 
-        public ImageService(IImageRepository imageRepository, IDetectedRepository detectionRepository)
+        public ImageService(IImageService imageRepository, IDetectedService detectionRepository)
         {
             _imageRepository = imageRepository;
             _detectionRepository = detectionRepository;
@@ -81,5 +81,55 @@ namespace c__repository_2026.c__service_2026.Services
         public List<ImageDto> GetByUser(int userId) => _imageRepository.GetByUserId(userId).Select(MapToDTO).ToList();
         public List<ImageDto> GetUnprocessed() => _imageRepository.GetAll().Where(i => i.Id > 0).ToList(); // לוגיקה לדוגמה
         public bool MarkAsProcessed(int imageId) => true;
+
+        public Task<List<ImageDto>> GetByGalleryAsync(int galleryId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<List<ImageDto>> GetByUserAsync(int userId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<List<ImageDto>> GetUnprocessedAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> MarkAsProcessedAsync(int imageId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<ImageDto> GetWithDetectionsAsync(int imageId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<List<ImageDto>> GetAllAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<ImageDto> GetByIdAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<ImageDto> AddItemAsync(ImageDto item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task UpdateItemAsync(int id, ImageDto item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task DeleteItemAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

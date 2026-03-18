@@ -1,11 +1,8 @@
-﻿using c__nRepository_2026.Entities;           // ה-Entities מה-DB
-using c__nRepository_2026.Interfaces;         // ה-Repositories שלך
-using c__repository_2026.c__service_2026.Dto; // ה-DTOs שלך
+﻿using c__service_2026.Dto;           // ה-Entities מה-DB
+using c__service_2026.Interfaces;
 
-namespace c__repository_2026.c__service_2026.Services
+namespace c__service_2026.Services
 {
-    public class CharacterService : ICharacterService
-    {
     public class CharacterService : ICharacterService
     {
         private readonly ICharacterService _characterRepository;
@@ -133,6 +130,46 @@ namespace c__repository_2026.c__service_2026.Services
                 CreatedDate = character.CreatedDate,
                 TotalDetections = detections.Count
             };
+        }
+
+        public Task<List<CharacterDto>> SearchByNameAsync(string name)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<List<CharacterDto>> GetTopDetectedAsync(int topCount)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Dictionary<string, object>> GetCharacterStatisticsAsync(int characterId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<List<CharacterDto>> GetAllAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<CharacterDto> GetByIdAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<CharacterDto> AddItemAsync(CharacterDto item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task UpdateItemAsync(int id, CharacterDto item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task DeleteItemAsync(int id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -17,4 +17,8 @@
     <Folder Include="Services\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\C--newRepository-2026\C#-nRepository-2026\C#-nRepository-2026.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -1,8 +1,8 @@
-﻿using c__nRepository_2026.Entities;           // ה-Entities מה-DB
-using c__nRepository_2026.Interfaces;         // ה-Repositories שלך
-using c__repository_2026.c__service_2026.Dto; // ה-DTOs שלך
+﻿         // ה-Entities מה-DB
+using c__service_2026.Interfaces;         // ה-Repositories שלך
+using c__service_2026.Dto;
 
-namespace c__repository_2026.c__service_2026.Services
+namespace c__service_2026.Services
 {
     public class GalleryService : IGalleryService
     {
@@ -177,6 +177,51 @@ namespace c__repository_2026.c__service_2026.Services
                 DetectionDate = detection.DetectionDate,
                 ModelUsed = detection.ModelUsed
             };
+        }
+
+        public Task<List<GalleryDto>> GetByUserAsync(int userId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<List<GalleryDto>> GetByCharacterAsync(int characterId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<GalleryDto> GetWithImagesAsync(int galleryId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Dictionary<string, object>> GetGalleryStatisticsAsync(int galleryId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<List<GalleryDto>> GetAllAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<GalleryDto> GetByIdAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<GalleryDto> AddItemAsync(GalleryDto item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task UpdateItemAsync(int id, GalleryDto item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task DeleteItemAsync(int id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

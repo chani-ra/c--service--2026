@@ -1,18 +1,18 @@
-﻿using c__repository_2026.c__service_2026.Dto;
-using c__repository_2026.c__service_2026.Interfaces;
-using Service.Interfaces;
+﻿using.c__service_2026.Dto;
+using c__service_2026.Dto;
+using c__service_2026.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace c__repository_2026.c__service_2026.Services
+namespace c__service_2026.Services
 {
     public class DetectedCharacterService : IDetectedService
     {
-        private readonly IDetectedRepository _detectionRepository;
-        private readonly ICharacterRepository _characterRepository;
+        private readonly IDetectedService _detectionRepository;
+        private readonly ICharacterService _characterRepository;
 
-        public DetectedCharacterService(IDetectedRepository detectionRepository, ICharacterRepository characterRepository)
+        public DetectedCharacterService(IDetectedService detectionRepository, ICharacterRepository characterRepository)
         {
             _detectionRepository = detectionRepository;
             _characterRepository = characterRepository;
@@ -73,6 +73,51 @@ namespace c__repository_2026.c__service_2026.Services
                 FaceCoordinates = d.FaceCoordinates,
                 ModelUsed = d.ModelUsed
             };
+        }
+
+        public Task<List<DetectedCharacterDto>> GetByImageAsync(int imageId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<List<DetectedCharacterDto>> GetByCharacterAsync(int characterId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<List<DetectedCharacterDto>> GetHighConfidenceAsync(double minConfidence)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Dictionary<string, object>> GetDetectionStatisticsAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<List<DetectedCharacterDto>> GetAllAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<DetectedCharacterDto> GetByIdAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<DetectedCharacterDto> AddItemAsync(DetectedCharacterDto item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task UpdateItemAsync(int id, DetectedCharacterDto item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task DeleteItemAsync(int id)
+        {
+            throw new NotImplementedException();
         }
     }
 }
