@@ -1,23 +1,25 @@
-﻿//c#-service-2026/Interfaces/IImageService.cs
-using c__service_2026.Dto;
+﻿using c__service_2026.Dto;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace c__service_2026.Interfaces
 {
-    // תיקון: הירושה שונתה ל-ImageDto (קודם הייתה טעות ב-Generic)
     public interface IImageService : IService<ImageDto>
     {
-        Task<List<ImageDto>> GetByGalleryAsync(int galleryId);
-        Task<List<ImageDto>> GetByUserAsync(int userId);
+        Task<List<ImageDto>> GetByGalleryIdAsync(int galleryId);
+        Task<List<ImageDto>> GetByUserIdAsync(int userId);
         Task<List<ImageDto>> GetUnprocessedAsync();
         Task<bool> MarkAsProcessedAsync(int imageId);
         Task<ImageDto> GetWithDetectionsAsync(int imageId);
     }
 }
 /*
- * מטרת הקובץ (IImageService):
- * ממשק לניהול התמונות הגולמיות במערכת.
- * כולל לוגיקה לניהול סטטוס עיבוד (Unprocessed) - עוזר לדעת אילו תמונות חדשות הועלו 
- * ועדיין לא עברו תהליך זיהוי דמויות, וכן שליפת תמונה יחד עם כל הזיהויים שנמצאו בה.
+ * -------------------------------------------------------------------------
+ * הסבר מפורט למבחן (מטרת עמוד זה):
+ * -------------------------------------------------------------------------
+ * ממשק המגדיר את השירותים הקשורים לניהול התמונות הפיזיות במערכת.
+ * מכיל לוגיקה עסקית מעניינת כמו GetUnprocessedAsync - שנועדה למשוך את כל התמונות
+ * שהועלו לשרת אך טרם עברו סריקה על ידי אלגוריתם זיהוי הפנים.
+ * שימוש בממשקים מסודרים כאלה מקל על עבודת צוות - אפשר שבת אחת תכתוב את ה-Controller
+ * בזמן שבת אחרת מממשת את ה-Service, כיוון שהחוזה (ה-Interface) כבר מוגדר וברור.
  */

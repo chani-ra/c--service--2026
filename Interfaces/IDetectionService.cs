@@ -1,21 +1,23 @@
-﻿//c#-service-2026/Interfaces/IDetectionService.cs
-using c__service_2026.Dto;
+﻿using c__service_2026.Dto;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace c__service_2026.Interfaces
 {
-    public interface IDetectedService : IService<DetectedCharacterDto>
+    public interface IDetectionService : IService<DetectedCharacterDto>
     {
-        Task<List<DetectedCharacterDto>> GetByImageAsync(int imageId);
-        Task<List<DetectedCharacterDto>> GetByCharacterAsync(int characterId);
+        Task<List<DetectedCharacterDto>> GetByImageIdAsync(int imageId);
+        Task<List<DetectedCharacterDto>> GetByCharacterIdAsync(int characterId);
         Task<List<DetectedCharacterDto>> GetHighConfidenceAsync(double minConfidence);
         Task<Dictionary<string, object>> GetDetectionStatisticsAsync();
     }
 }
 /*
- * מטרת הקובץ (IDetectedService):
- * ממשק זה מגדיר את הפעולות עבור תוצאות הזיהוי של האלגוריתם.
- * הוא מאפשר לשלוף את כל הזיהויים ששייכים לתמונה מסוימת או לדמות מסוימת, 
- * וכן לסנן זיהויים לפי "רמת ביטחון" (Confidence) - דרישה נפוצה במערכות זיהוי פנים.
+ * -------------------------------------------------------------------------
+ * הסבר מפורט למבחן (מטרת עמוד זה):
+ * -------------------------------------------------------------------------
+ * ממשק המגדיר את פעולות השירות עבור 'זיהויים' (DetectedCharacter).
+ * פונקציות מרכזיות כאן כמו GetHighConfidenceAsync מאפשרות למערכת לסנן
+ * ולהציג רק זיהויים ברמת ביטחון גבוהה (למשל מעל 90% ודאות שזו אותה דמות).
+ * הממשק עובד אך ורק עם DetectedCharacterDto.
  */

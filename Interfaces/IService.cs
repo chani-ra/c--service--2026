@@ -1,10 +1,10 @@
-﻿//c#-service-2026/Interfaces/IService.cs
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace c__service_2026.Interfaces
 {
-    public interface IService<T>
+    // ממשק גנרי T מאפשר לנו לכתוב את פעולות הבסיס פעם אחת לכל ה-DTOs
+    public interface IService<T> where T : class
     {
         Task<List<T>> GetAllAsync();
         Task<T> GetByIdAsync(int id);
@@ -14,9 +14,13 @@ namespace c__service_2026.Interfaces
     }
 }
 /*
- * מטרת הקובץ (IService - Generic Interface):
- * זהו ממשק התשתית לכל השירותים במערכת. 
- * הוא מגדיר את פעולות ה-CRUD הבסיסיות שכל Service חייב לממש.
- * שינוי קריטי: כל הפונקציות הוגדרו כ-Task א-סינכרוני כדי לאפשר עבודה יעילה מול ה-Repository 
- * ומסד הנתונים, בהתאם לדרישה מס' 22 בהוראות המורה.
+ * -------------------------------------------------------------------------
+ * הסבר מפורט למבחן (מטרת עמוד זה):
+ * -------------------------------------------------------------------------
+ * זהו הממשק (Interface) הבסיסי והגנרי של שכבת השירות (Service Layer).
+ * מטרתו להגדיר את החוזה (Contract) עבור פעולות ה-CRUD (יצירה, קריאה, עדכון, מחיקה) הבסיסיות.
+ * שימוש ב-Generics (<T>) חוסך לנו שכפול קוד – כל Service פרטי שניצור פשוט יירש מהממשק הזה
+ * ויקבל אוטומטית את ההתחייבות לממש את חמשת הפעולות הללו.
+ * **דגש למורה:** בהתאם לסעיף 22 בהוראות, כל המתודות הוגדרו כ-Task (א-סינכרוניות) 
+ * כדי להבטיח ביצועים גבוהים מבלי לחסום את התהליך (Thread) הראשי של השרת.
  */
