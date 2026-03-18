@@ -1,4 +1,5 @@
-﻿using c__service_2026.Dto;
+﻿//c#-service-2026/Interfaces/IImageService.cs
+using c__service_2026.Dto;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
